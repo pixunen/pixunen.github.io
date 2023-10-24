@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+body, html {
+    margin: 0;
+}
+
+.parent-container {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('./bg.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.child-div {
+    width: 31.74%; /* Percentage based on original image width */
+    height: 25.39%; /* Percentage based on original image height */
+    position: absolute;
+    top: 30%;  /* Percentage based Y position */
+    left: 34.18%; /* Percentage based X position */
+    border-radius: 50px;
+    box-sizing: border-box; /* Ensures padding and border are included in total width/height */
+    padding: 20px; /* Add some padding for better appearance */
+    font-family: 'VT323', monospace;
+    padding-left: 2rem;
+}
+
+/* Default styles for non-mobile */
+.child-div h1 {
+    font-size: 36px; /* Adjust as needed for non-mobile */
+}
+
+.child-div ul li a {
+    font-size: 24px; /* Adjust as needed for non-mobile */
+}
+
+/* Media query for mobile devices */
+@media (max-width: 758px) { /* This targets screens with a width of 768px or less */
+    .child-div {
+        width: 60%; /* Percentage based on original image width */
+        left: 20%;
+        padding: 20px;
+    }
+
+    .child-div h1 {
+        font-size: 24px; /* Adjust as needed for mobile */
+    }
+
+    .child-div ul li a {
+        font-size: 16px; /* Adjust as needed for mobile */
+    }
+}
