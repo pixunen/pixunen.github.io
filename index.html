@@ -1,21 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Otto Piskonen's Portfolio</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            font-family: "VT323", monospace;
+            font-weight: 400;
+            font-style: normal;
+        }
+        .top-bar, .bottom-bar {
+            position: fixed;
+            width: 100%;
+            height: 15%;
+            background-color: #333;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        .top-bar {
+            top: 0;
+        }
+        .bottom-bar {
+            bottom: 0;
+        }
+        .content-container {
+            flex: 1;
+            overflow: hidden;
+            box-sizing: border-box;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .section {
+            height: 100%;
+            width: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+        }
+        .section.active {
+            display: flex;
+        }
+        .indicator-container {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 3; /* Increase z-index to ensure it's above other elements */
+        }
+
+        .indicator {
+            width: 20px;
+            height: 20px;
+            background-color: grey;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background-color: black;
+            width: 20px;
+            height: 40px;
+            border-radius: 10px;
+        }
+        .title {
+            position: absolute;
+            z-index: 2; /* Ensure the title is above other elements */
+            color: white; /* Make the title stand out against the background */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Add a shadow for depth */
+            font-size: 3em; /* Increase font size to make it pop */
+            transform: translateY(-50%);
+            top: 30%; /* Adjust the position of the title */
+            text-align: center;
+            padding: 20px;
+        }
+
+        .background-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure the image covers the entire section */
+            filter: brightness(50%);
+            z-index: 1; /* Ensure the image is behind the title */
+        }
+
+        /* Media query to hide top and bottom bars on mobile */
+        @media (max-width: 768px) {
+            .top-bar, .bottom-bar {
+                display: none;
+            }
+            .content-container {
+                margin: 0;
+            }
+            .title {
+                font-size: 1.5em; /* Slightly smaller font size on mobile */
+                top: 40%; /* Adjust the position to be more centered */
+                padding: 10px; /* Reduce padding to fit smaller screens */
+            }
+
+            /* Adjust image container filter or any other elements if needed */
+            .background-image-container {
+                filter: brightness(40%); /* Darken background slightly more on mobile for better contrast */
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="parent-container">
-        <div class="child-div">
-            <h1>My Portfolio</h1>
-            <ul>
-                <li><a href="https://www.korttelikommentti.fi/" target="_blank">Korttelikommentti 🗺️</a></li>
-                <li><a href="https://adventur.fi/" target="_blank">Adventur 🎾</a></li>
-                <li><a href="https://github.com/pixunen" target="_blank">Github 👾</a></li>
-            </ul>
+    <div class="content-container" id="content-container">
+        <div class="section active" style="background-color: lightblue;">
+            <h2 class="title">Korttelikommentti</h2>
+            <a href="https://www.korttelikommentti.fi" target="_blank"><img src="/kk.webp" alt="korttelikommentti" class="background-image-container"></a>
+        </div>
+        <div class="section" style="background-color: lightgreen;">
+            <h2 class="title">Adventur</h2>
+            <a href="https://www.adventur.fi" target="_blank"><img src="/adventur.webp" alt="adventur" class="background-image-container"></a>
+        </div>
+        <div class="section" style="background-color: lightcoral;">
+            <h2 class="title">Github</h2>
+            <a href="https://github.com/pixunen" target="_blank"><img src="/github.webp" alt="adventur" class="background-image-container"></a>
+        </div>
+        <div class="indicator-container" id="indicator-container">
+            <div class="indicator active"></div>
+            <div class="indicator"></div>
+            <div class="indicator"></div>
         </div>
     </div>
+    <div class="bottom-bar"><h1>Otto Piskonen's Portfolio</h1></div>
+
+    <script>
+        const sections = document.querySelectorAll('.section');
+        const indicators = document.querySelectorAll('.indicator');
+        let currentIndex = 0;
+        let startY;
+
+        const updateIndicators = () => {
+            indicators.forEach((indicator, index) => {
+                if (index === currentIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        };
+
+        document.addEventListener('wheel', (event) => {
+            const delta = Math.sign(event.deltaY);
+            
+            if (delta > 0 && currentIndex < sections.length - 1) {
+                sections[currentIndex].classList.remove('active');
+                currentIndex++;
+                sections[currentIndex].classList.add('active');
+            } else if (delta < 0 && currentIndex > 0) {
+                sections[currentIndex].classList.remove('active');
+                currentIndex--;
+                sections[currentIndex].classList.add('active');
+            }
+            updateIndicators();
+        });
+
+        document.addEventListener('touchstart', (event) => {
+            startY = event.touches[0].clientY;
+        });
+
+        document.addEventListener('touchmove', (event) => {
+            if (!startY) return;
+
+            let endY = event.touches[0].clientY;
+            let deltaY = startY - endY;
+
+            if (deltaY > 50 && currentIndex < sections.length - 1) {
+                sections[currentIndex].classList.remove('active');
+                currentIndex++;
+                sections[currentIndex].classList.add('active');
+                startY = null;
+            } else if (deltaY < -50 && currentIndex > 0) {
+                sections[currentIndex].classList.remove('active');
+                currentIndex--;
+                sections[currentIndex].classList.add('active');
+                startY = null;
+            }
+            updateIndicators();
+        });
+
+        updateIndicators();
+    </script>
 </body>
 </html>
