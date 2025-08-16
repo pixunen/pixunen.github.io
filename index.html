@@ -3,207 +3,861 @@
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Otto Piskonen's Portfolio</title>
     <style>
-        body, html {
+        * {
             margin: 0;
             padding: 0;
-            height: 100%;
-            overflow: hidden;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: #000;
+            color: #00ff41;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            font-family: "VT323", monospace;
-            font-weight: 400;
-            font-style: normal;
-        }
-        .top-bar, .bottom-bar {
-            position: fixed;
-            width: 100%;
-            height: 15%;
-            background-color: #333;
-            color: white;
-            display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 10;
-        }
-        .top-bar {
-            top: 0;
-        }
-        .bottom-bar {
-            bottom: 0;
-        }
-        .content-container {
-            flex: 1;
+            padding: 20px;
             overflow: hidden;
-            box-sizing: border-box;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             position: relative;
         }
-        .section {
-            height: 100%;
-            width: 100%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 2em;
-        }
-        .section.active {
-            display: flex;
-        }
-        .indicator-container {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 3; /* Increase z-index to ensure it's above other elements */
-        }
-
-        .indicator {
-            width: 20px;
-            height: 20px;
-            background-color: grey;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        .indicator.active {
-            background-color: black;
-            width: 20px;
-            height: 40px;
-            border-radius: 10px;
-        }
-        .title {
-            position: absolute;
-            z-index: 2; /* Ensure the title is above other elements */
-            color: white; /* Make the title stand out against the background */
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Add a shadow for depth */
-            font-size: 3em; /* Increase font size to make it pop */
-            transform: translateY(-50%);
-            top: 30%; /* Adjust the position of the title */
-            text-align: center;
-            padding: 20px;
-        }
-
-        .background-image-container {
-            position: absolute;
+        
+        .artistic-background {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensure the image covers the entire section */
-            filter: brightness(50%);
-            z-index: 1; /* Ensure the image is behind the title */
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, #001122 0%, #000000 70%);
         }
-
-        /* Media query to hide top and bottom bars on mobile */
+        
+        .floating-particle {
+            position: fixed;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+            pointer-events: none;
+            filter: blur(0px);
+            top: 0;
+            left: 0;
+            transform-origin: center center;
+            z-index: -1;
+            will-change: transform, opacity;
+        }
+        
+        .particle-text {
+            background: linear-gradient(45deg, #00ff41, #00aa33, #007722);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 3s ease-in-out infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .particle-infinity-1 {
+            animation: infinity-path-1 20s linear infinite;
+        }
+        
+        .particle-infinity-2 {
+            animation: infinity-path-2 25s linear infinite;
+        }
+        
+        .particle-infinity-3 {
+            animation: infinity-path-3 30s linear infinite;
+        }
+        
+        @keyframes infinity-path-1 {
+            0% {
+                transform: translate(-200px, 50vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.8;
+            }
+            12.5% {
+                transform: translate(calc(25vw - 100px), calc(50vh - 150px)) rotate(90deg) scale(1.0);
+                opacity: 1;
+            }
+            25% {
+                transform: translate(50vw, 50vh) rotate(180deg) scale(1.2);
+                opacity: 1;
+            }
+            37.5% {
+                transform: translate(calc(75vw + 100px), calc(50vh - 150px)) rotate(270deg) scale(1.0);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(calc(100vw + 200px), 50vh) rotate(360deg) scale(0.8);
+                opacity: 0.6;
+            }
+            62.5% {
+                transform: translate(calc(75vw + 100px), calc(50vh + 150px)) rotate(450deg) scale(1.0);
+                opacity: 1;
+            }
+            75% {
+                transform: translate(50vw, 50vh) rotate(540deg) scale(1.2);
+                opacity: 1;
+            }
+            87.5% {
+                transform: translate(calc(25vw - 100px), calc(50vh + 150px)) rotate(630deg) scale(1.0);
+                opacity: 1;
+            }
+            95% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(-200px, 50vh) rotate(720deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes infinity-path-2 {
+            0% {
+                transform: translate(calc(100vw + 200px), 30vh) rotate(0deg) scale(0.3);
+                opacity: 0;
+            }
+            8% {
+                opacity: 0.9;
+            }
+            20% {
+                transform: translate(calc(75vw + 120px), calc(30vh + 120px)) rotate(135deg) scale(1.1);
+                opacity: 1;
+            }
+            35% {
+                transform: translate(50vw, 30vh) rotate(270deg) scale(1.4);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(calc(25vw - 120px), calc(30vh + 120px)) rotate(405deg) scale(1.1);
+                opacity: 1;
+            }
+            65% {
+                transform: translate(-200px, 30vh) rotate(540deg) scale(0.6);
+                opacity: 0.7;
+            }
+            80% {
+                transform: translate(calc(25vw - 120px), calc(30vh - 120px)) rotate(675deg) scale(1.1);
+                opacity: 1;
+            }
+            92% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translate(calc(100vw + 200px), 30vh) rotate(720deg) scale(0.3);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes infinity-path-3 {
+            0% {
+                transform: translate(-200px, 70vh) rotate(0deg) scale(0.7);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            25% {
+                transform: translate(calc(30vw - 80px), calc(70vh - 100px)) rotate(180deg) scale(1.0);
+                opacity: 1;
+            }
+            40% {
+                transform: translate(50vw, 70vh) rotate(270deg) scale(1.3);
+                opacity: 1;
+            }
+            55% {
+                transform: translate(calc(70vw + 80px), calc(70vh - 100px)) rotate(360deg) scale(1.0);
+                opacity: 1;
+            }
+            70% {
+                transform: translate(calc(100vw + 200px), 70vh) rotate(450deg) scale(0.5);
+                opacity: 0.8;
+            }
+            85% {
+                transform: translate(calc(70vw + 80px), calc(70vh + 100px)) rotate(540deg) scale(1.0);
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translate(-200px, 70vh) rotate(720deg) scale(0.7);
+                opacity: 0;
+            }
+        }
+        
+        .terminal {
+            background: rgba(26, 26, 26, 0.95);
+            border: 2px solid #333;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 800px;
+            min-height: 500px;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+        
+        .terminal-header {
+            background: #333;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            border-radius: 6px 6px 0 0;
+        }
+        
+        .terminal-buttons {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .close { background: #ff5f56; }
+        .minimize { background: #ffbd2e; }
+        .maximize { background: #27ca3f; }
+        
+        .terminal-title {
+            color: #ccc;
+            margin-left: 15px;
+            font-size: 14px;
+        }
+        
+        .terminal-body {
+            padding: 20px;
+            min-height: 400px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .output {
+            margin-bottom: 10px;
+            line-height: 1.4;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+        }
+        
+        .output div {
+            margin-bottom: 2px;
+        }
+        
+        .input-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0;
+        }
+        
+        
+        .command {
+            color: #fff;
+        }
+        
+        
+        .prompt {
+            color: #00ff41;
+            white-space: nowrap;
+            margin-right: 5px;
+        }
+        
+        .input-field {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-family: inherit;
+            font-size: inherit;
+            flex: 1;
+            margin-left: 5px;
+            caret-color: transparent;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+        }
+        
+        .input-container {
+            position: relative;
+            flex: 1;
+            margin-left: 0;
+            overflow: hidden;
+            width: calc(100% - 200px);
+        }
+        
+        .thick-cursor {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 1.2em;
+            background: #00ff41;
+            animation: blink 1s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .terminal-hint {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .hint-text {
+            color: #666;
+            font-size: 14px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .hint-command {
+            color: #00ff41;
+            font-weight: bold;
+            background: #1a1a1a;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        
+        .error {
+            color: #ff4444;
+        }
+        
+        .success {
+            color: #44ff44;
+        }
+        
+        .boot-screen {
+            display: block;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        .boot-screen.hidden {
+            display: none;
+        }
+        
+        .ascii-art {
+            color: #00ff41;
+            font-size: 12px;
+            white-space: pre;
+            margin: 20px 0;
+        }
+        
+        .boot-message {
+            color: #ccc;
+            margin: 5px 0;
+        }
+        
+        .loading {
+            color: #00ff41;
+        }
+        
+        .boot-complete {
+            color: #44ff44;
+        }
+        
+        .terminal-interface {
+            display: none;
+        }
+        
+        .terminal-interface.ready {
+            display: block;
+        }
+        
+        /* Custom scrollbar styling */
+        .terminal-body::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        .terminal-body::-webkit-scrollbar-track {
+            background: #0a0a0a;
+            border-radius: 6px;
+        }
+        
+        .terminal-body::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 6px;
+            border: 2px solid #0a0a0a;
+        }
+        
+        .terminal-body::-webkit-scrollbar-thumb:hover {
+            background: #00ff41;
+        }
+        
+        .terminal-body::-webkit-scrollbar-corner {
+            background: #0a0a0a;
+        }
+        
+        /* Firefox scrollbar styling */
+        .terminal-body {
+            scrollbar-width: thin;
+            scrollbar-color: #333 #0a0a0a;
+        }
+        
         @media (max-width: 768px) {
-            .top-bar, .bottom-bar {
-                display: none;
+            .ascii-art {
+                font-size: 8px;
             }
-            .content-container {
-                margin: 0;
+            body {
+                padding: 10px;
             }
-            .title {
-                font-size: 1.5em; /* Slightly smaller font size on mobile */
-                top: 40%; /* Adjust the position to be more centered */
-                padding: 10px; /* Reduce padding to fit smaller screens */
+            
+            .terminal {
+                min-height: 400px;
             }
-
-            /* Adjust image container filter or any other elements if needed */
-            .background-image-container {
-                filter: brightness(40%); /* Darken background slightly more on mobile for better contrast */
+            
+            .terminal-body {
+                padding: 15px;
+            }
+            
+            .command-list {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="content-container" id="content-container">
-        <div class="section active" style="background-color: lightblue;">
-            <h2 class="title">Korttelikommentti</h2>
-            <a href="https://www.korttelikommentti.fi" target="_blank"><img src="/kk.webp" alt="korttelikommentti" class="background-image-container"></a>
+    <div class="artistic-background" id="artisticBackground"></div>
+    
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <div class="terminal-button close"></div>
+                <div class="terminal-button minimize"></div>
+                <div class="terminal-button maximize"></div>
+            </div>
+            <div class="terminal-title">otto@portfolio:~$</div>
         </div>
-        <div class="section" style="background-color: lightgreen;">
-            <h2 class="title">Adventur</h2>
-            <a href="https://www.adventur.fi" target="_blank"><img src="/adventur.webp" alt="adventur" class="background-image-container"></a>
-        </div>
-        <div class="section" style="background-color: lightcoral;">
-            <h2 class="title">Github</h2>
-            <a href="https://github.com/pixunen" target="_blank"><img src="/github.webp" alt="adventur" class="background-image-container"></a>
-        </div>
-        <div class="indicator-container" id="indicator-container">
-            <div class="indicator active"></div>
-            <div class="indicator"></div>
-            <div class="indicator"></div>
+        <div class="terminal-body">
+            <div class="boot-screen" id="bootScreen">
+                <div class="boot-message" id="dynamicMessage"></div>
+                <div class="loading" id="loadingDots">Loading</div>
+                <div class="ascii-art" id="asciiArt" style="display: none;">
+  ██████╗ ████████╗████████╗ ██████╗ 
+ ██╔═══██╗╚══██╔══╝╚══██╔══╝██╔═══██╗
+ ██║   ██║   ██║      ██║   ██║   ██║
+ ██║   ██║   ██║      ██║   ██║   ██║
+ ╚██████╔╝   ██║      ██║   ╚██████╔╝
+  ╚═════╝    ╚═╝      ╚═╝    ╚═════╝ 
+
+    ┌─ PORTFOLIO TERMINAL v2.0 ─┐
+    │   Developed by Otto P.    │
+    └───────────────────────────┘
+                </div>
+                <div class="boot-complete" id="bootComplete" style="display: none;">
+                    System initialized successfully!
+                </div>
+            </div>
+            
+            <div class="terminal-interface" id="terminalInterface">
+                <div class="output" id="output">
+                    <div>Welcome to Otto Piskonen's Portfolio Terminal</div>
+                    <div>Type 'help' to see available commands</div>
+                    <div></div>
+                </div>
+                <div class="input-line" id="currentInputLine" style="display: none;">
+                    <span class="prompt">otto@portfolio:~$</span>
+                    <div class="input-container">
+                        <input type="text" class="input-field" id="commandInput" autocomplete="off">
+                        <div class="thick-cursor" id="thickCursor"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="bottom-bar"><h1>Otto Piskonen's Portfolio</h1></div>
+    
+    <div class="terminal-hint">
+        <div class="hint-text">💡 Tip: Type <span class="hint-command">help</span> to see all available commands</div>
+    </div>
 
     <script>
-        const sections = document.querySelectorAll('.section');
-        const indicators = document.querySelectorAll('.indicator');
-        let currentIndex = 0;
-        let startY;
-
-        const updateIndicators = () => {
-            indicators.forEach((indicator, index) => {
-                if (index === currentIndex) {
-                    indicator.classList.add('active');
-                } else {
-                    indicator.classList.remove('active');
-                }
-            });
-        };
-
-        document.addEventListener('wheel', (event) => {
-            const delta = Math.sign(event.deltaY);
+        const output = document.getElementById('output');
+        const commandInput = document.getElementById('commandInput');
+        
+        const commands = {
+            help: () => {
+                return `Available commands:
+• help - Show all available commands
+• about - About me  
+• projects - List all projects
+• contact - Contact information
+• korttelikommentti - Open Korttelikommentti project
+• adventur - Open Adventur project
+• github - Open GitHub profile
+• clear / cls - Clear terminal`;
+            },
             
-            if (delta > 0 && currentIndex < sections.length - 1) {
-                sections[currentIndex].classList.remove('active');
-                currentIndex++;
-                sections[currentIndex].classList.add('active');
-            } else if (delta < 0 && currentIndex > 0) {
-                sections[currentIndex].classList.remove('active');
-                currentIndex--;
-                sections[currentIndex].classList.add('active');
+            about: () => {
+                return `Otto Piskonen - Software Developer
+Building web applications and exploring new technologies.
+Check out my projects below!`;
+            },
+            
+            projects: () => {
+                return `My Projects:
+1. Korttelikommentti - Local community platform
+   Type 'korttelikommentti' to visit
+
+2. Adventur - Adventure planning application  
+   Type 'adventur' to visit
+
+3. GitHub - All other projects and contributions
+   Type 'github' to visit`;
+            },
+            
+            korttelikommentti: () => {
+                window.open('https://www.korttelikommentti.fi', '_blank');
+                return 'Opening Korttelikommentti...';
+            },
+            
+            adventur: () => {
+                window.open('https://unk-project-34c26.web.app/', '_blank');
+                return 'Opening Adventur...';
+            },
+            
+            github: () => {
+                window.open('https://github.com/pixunen', '_blank');
+                return 'Opening GitHub profile...';
+            },
+            
+            clear: () => {
+                output.innerHTML = '';
+                return '';
+            },
+            
+            cls: () => {
+                output.innerHTML = '';
+                return '';
+            },
+            
+            contact: () => {
+                return `Contact Information:
+GitHub: github.com/pixunen
+Portfolio: pixunen.github.io`;
             }
-            updateIndicators();
-        });
-
-        document.addEventListener('touchstart', (event) => {
-            startY = event.touches[0].clientY;
-        });
-
-        document.addEventListener('touchmove', (event) => {
-            if (!startY) return;
-
-            let endY = event.touches[0].clientY;
-            let deltaY = startY - endY;
-
-            if (deltaY > 50 && currentIndex < sections.length - 1) {
-                sections[currentIndex].classList.remove('active');
-                currentIndex++;
-                sections[currentIndex].classList.add('active');
-                startY = null;
-            } else if (deltaY < -50 && currentIndex > 0) {
-                sections[currentIndex].classList.remove('active');
-                currentIndex--;
-                sections[currentIndex].classList.add('active');
-                startY = null;
+        };
+        
+        function addOutput(text, className = '') {
+            const div = document.createElement('div');
+            div.textContent = text;
+            if (className) div.className = className;
+            output.appendChild(div);
+            
+            // Auto-scroll to bottom when new content is added
+            const terminalBody = document.querySelector('.terminal-body');
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+        
+        function processCommand(cmd) {
+            const command = cmd.toLowerCase().trim();
+            
+            addOutput(`otto@portfolio:~$ ${cmd}`, 'command');
+            
+            if (commands[command]) {
+                const result = commands[command]();
+                if (result) {
+                    result.split('\n').forEach(line => {
+                        addOutput(line, command === 'help' || command === 'about' || command === 'projects' || command === 'contact' ? 'success' : '');
+                    });
+                }
+            } else if (command === '') {
+                // Do nothing for empty command
+            } else {
+                addOutput(`Command not found: ${command}`, 'error');
+                addOutput(`Type 'help' for available commands`, 'error');
             }
-            updateIndicators();
+            
+            addOutput(''); // Empty line for spacing
+        }
+        
+        commandInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const command = commandInput.value;
+                processCommand(command);
+                commandInput.value = '';
+                updateCursorPosition();
+            }
         });
-
-        updateIndicators();
+        
+        // Limit input length like a real terminal
+        commandInput.addEventListener('input', (e) => {
+            const maxLength = 80; // Typical terminal line length
+            if (e.target.value.length > maxLength) {
+                e.target.value = e.target.value.substring(0, maxLength);
+            }
+            updateCursorPosition();
+        });
+        
+        // Boot sequence
+        function startBootSequence() {
+            const bootScreen = document.getElementById('bootScreen');
+            const terminalInterface = document.getElementById('terminalInterface');
+            const loadingDots = document.getElementById('loadingDots');
+            const asciiArt = document.getElementById('asciiArt');
+            const bootComplete = document.getElementById('bootComplete');
+            const commandInput = document.getElementById('commandInput');
+            const dynamicMessage = document.getElementById('dynamicMessage');
+            
+            const bootMessages = [
+                "Initializing portfolio.dll...",
+                "Caffeinating code processors...",
+                "Loading stack overflow answers...",
+                "Warming up rubber duck...",
+                "Starting coding wizardry..."
+            ];
+            
+            // Shuffle messages for random order
+            const shuffledMessages = [...bootMessages].sort(() => Math.random() - 0.5);
+            
+            let messageIndex = 0;
+            let dotCount = 0;
+            
+            // Show messages dynamically with longer display time
+            const messageInterval = setInterval(() => {
+                if (messageIndex < shuffledMessages.length) {
+                    dynamicMessage.textContent = shuffledMessages[messageIndex];
+                    messageIndex++;
+                } else {
+                    clearInterval(messageInterval);
+                }
+            }, 800);
+            
+            // Loading dots animation
+            const loadingInterval = setInterval(() => {
+                dotCount = (dotCount + 1) % 4;
+                loadingDots.textContent = 'Loading' + '.'.repeat(dotCount);
+            }, 500);
+            
+            // Show ASCII art after 4.5 seconds (5 messages × 800ms + buffer)
+            setTimeout(() => {
+                clearInterval(loadingInterval);
+                clearInterval(messageInterval);
+                dynamicMessage.textContent = "System ready!";
+                loadingDots.style.display = 'none';
+                asciiArt.style.display = 'block';
+            }, 4500);
+            
+            // Show boot complete message after 6.5 seconds
+            setTimeout(() => {
+                bootComplete.style.display = 'block';
+            }, 6500);
+            
+            // Switch to terminal interface after 8 seconds
+            setTimeout(() => {
+                bootScreen.classList.add('hidden');
+                terminalInterface.classList.add('ready');
+                document.getElementById('currentInputLine').style.display = 'flex';
+                commandInput.focus();
+            }, 8000);
+        }
+        
+        // Artistic floating particles animation
+        function createArtisticEffect() {
+            const artisticBackground = document.getElementById('artisticBackground');
+            const words = [
+                // Core & Personal
+                'OTTO', 'CODE', 'DEV', 'DEVELOPER', 'PORTFOLIO',
+                
+                // Primary Technologies - JavaScript/TypeScript Stack
+                'JavaScript', 'TypeScript', 'JS', 'TS', 'React', 'Node.js', 'Express',
+                'async', 'await', 'Promise', 'fetch', 'import', 'export', 'const', 'let',
+                
+                // Microsoft Stack
+                'C#', '.NET', '.NET Core', 'ASP.NET', 'Entity Framework', 'LINQ',
+                'Azure', 'Azure DevOps', 'Azure Functions', 'Azure SQL',
+                
+                // Database Technologies
+                'SQL Server', 'T-SQL', 'SQL', 'NoSQL', 'Database', 'Entity Framework',
+                'SELECT', 'INSERT', 'UPDATE', 'DELETE', 'JOIN', 'WHERE',
+                
+                // DevOps & CI/CD
+                'CI/CD', 'DevOps', 'Azure DevOps', 'Pipeline', 'Build', 'Deploy',
+                'Docker', 'Git', 'GitHub', 'Automation', 'Testing', 'Release',
+                
+                // Web Technologies
+                'HTML', 'CSS', 'REST API', 'JSON', 'API', 'HTTP', 'HTTPS',
+                'Frontend', 'Backend', 'Full Stack', 'SPA', 'MVC',
+                
+                // Development Practices
+                'SOLID', 'DRY', 'Clean Code', 'Architecture', 'Design Patterns',
+                'AGILE', 'SCRUM', 'TDD', 'Unit Testing', 'Integration Testing',
+                
+                // Version Control & Collaboration
+                'git push', 'git pull', 'git merge', 'git commit', 'BRANCH', 'PR',
+                'Code Review', 'Collaboration', 'Team Lead', 'Mentoring',
+                
+                // C# Keywords & Concepts
+                'class', 'interface', 'abstract', 'public', 'private', 'protected',
+                'static', 'virtual', 'override', 'async Task', 'IEnumerable',
+                'try', 'catch', 'finally', 'using', 'namespace', 'var',
+                
+                // JavaScript/TypeScript Syntax
+                '=>', '{}', '[]', '()', '??', '?.', '...spread', 'destructuring',
+                'map', 'filter', 'reduce', 'forEach', 'find', 'includes',
+                
+                // Cloud & Infrastructure
+                'Cloud', 'Microservices', 'Serverless', 'Scalability', 'Security',
+                'Performance', 'Monitoring', 'Logging', 'Authentication', 'Authorization'
+            ];
+            const symbols = [
+                // Geometric shapes
+                '◆', '◇', '●', '○', '▲', '△', '■', '□', '★', '☆', '♦', '♢', '◈', '◉', '▼', '▽',
+                // Programming symbols
+                '⚡', '⚙️', '🚀', '💻', '🔧', '🔥', '✨', '🎯', '🏗️', '🌟', '💡', '🔮', '⭐',
+                // Code symbols
+                '∞', '∀', '∃', '∈', '∉', '∩', '∪', '⊂', '⊃', '⊆', '⊇', '∧', '∨', '¬',
+                // Tech symbols  
+                '⌘', '⌥', '⌃', '⇧', '⏎', '⌫', '⌦', '↑', '↓', '←', '→', '↔', '↕', '⟲', '⟳'
+            ];
+            
+            function createFloatingParticle() {
+                const particle = document.createElement('div');
+                particle.className = 'floating-particle';
+                
+                // Force initial position off-screen to prevent flashing
+                particle.style.transform = 'translate(-300px, -300px) scale(0)';
+                particle.style.opacity = '0';
+                
+                // Random content - either word or symbol
+                const isSymbol = Math.random() < 0.3;
+                const content = isSymbol ? 
+                    symbols[Math.floor(Math.random() * symbols.length)] :
+                    words[Math.floor(Math.random() * words.length)];
+                
+                // Create text element with gradient
+                const textElement = document.createElement('span');
+                textElement.className = 'particle-text';
+                textElement.textContent = content;
+                particle.appendChild(textElement);
+                
+                // Random size
+                const fontSize = Math.random() * 20 + 12; // 12-32px
+                particle.style.fontSize = fontSize + 'px';
+                
+                // Random infinity animation pattern
+                const animationClasses = ['particle-infinity-1', 'particle-infinity-2', 'particle-infinity-3'];
+                const animationClass = animationClasses[Math.floor(Math.random() * 3)];
+                
+                // Random timing offset to spread out particles
+                const delay = Math.random() * 10; // 0-10 second delay for more variety
+                particle.style.animationDelay = delay + 's';
+                
+                // Add some blur to distant particles for depth
+                if (Math.random() < 0.3) {
+                    particle.style.filter = `blur(${Math.random() * 1.5}px)`;
+                }
+                
+                // Random opacity for layering effect
+                const maxOpacity = Math.random() * 0.7 + 0.3; // 0.3-1.0
+                particle.dataset.maxOpacity = maxOpacity;
+                
+                // Add unique ID for tracking
+                particle.dataset.particleId = Date.now() + Math.random();
+                
+                artisticBackground.appendChild(particle);
+                
+                // Start animation after a brief delay to ensure proper positioning
+                setTimeout(() => {
+                    particle.classList.add(animationClass);
+                    particle.style.opacity = maxOpacity;
+                }, 50);
+                
+                // Remove particle after animation completes
+                const animationDuration = animationClass.includes('1') ? 20 : (animationClass.includes('2') ? 25 : 30);
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, (animationDuration + delay + 1) * 1000); // Add 1s buffer
+            }
+            
+            // Cleanup function to remove any stuck particles
+            function cleanupStuckParticles() {
+                const particles = artisticBackground.querySelectorAll('.floating-particle');
+                particles.forEach(particle => {
+                    const rect = particle.getBoundingClientRect();
+                    // Remove particles that are stuck in corners or outside reasonable bounds
+                    if ((rect.left < -400 || rect.left > window.innerWidth + 400 || 
+                         rect.top < -400 || rect.top > window.innerHeight + 400) &&
+                        particle.style.opacity !== '0') {
+                        // Particle is way off screen but still visible - likely stuck
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }
+                });
+            }
+            
+            // Create initial particles
+            for (let i = 0; i < 8; i++) {
+                setTimeout(createFloatingParticle, Math.random() * 3000);
+            }
+            
+            // Continuously create new particles
+            setInterval(createFloatingParticle, 2000);
+            
+            // Run cleanup every 5 seconds to remove stuck particles
+            setInterval(cleanupStuckParticles, 5000);
+        }
+        
+        // Start artistic effect and boot sequence when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            createArtisticEffect();
+            startBootSequence();
+        });
+        
+        // Update cursor position
+        function updateCursorPosition() {
+            const commandInput = document.getElementById('commandInput');
+            const thickCursor = document.getElementById('thickCursor');
+            if (!commandInput || !thickCursor) return;
+            
+            // Create a temporary span to measure text width
+            const tempSpan = document.createElement('span');
+            tempSpan.style.font = window.getComputedStyle(commandInput).font;
+            tempSpan.style.visibility = 'hidden';
+            tempSpan.style.position = 'absolute';
+            tempSpan.textContent = commandInput.value;
+            document.body.appendChild(tempSpan);
+            
+            const textWidth = tempSpan.offsetWidth;
+            document.body.removeChild(tempSpan);
+            
+            thickCursor.style.left = textWidth + 'px';
+        }
+        
+        // Keep input focused and update cursor
+        document.addEventListener('click', () => {
+            const commandInput = document.getElementById('commandInput');
+            if (commandInput) {
+                commandInput.focus();
+            }
+        });
+        
+        // Update cursor position on input
+        document.addEventListener('input', updateCursorPosition);
+        document.addEventListener('keyup', updateCursorPosition);
+        
+        // Initial cursor position
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(updateCursorPosition, 100);
+        });
     </script>
 </body>
 </html>
