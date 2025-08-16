@@ -5,8 +5,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 
 This is a static HTML portfolio website hosted on GitHub Pages. The site showcases three main projects:
-- Korttelikommentti (korttelikommentti.fi)
-- Adventur (adventur.fi) 
+- Korttelikommentti (korttelikommentti.fi) - Next.js app hosted on Vercel using Supabase backend and Mapbox
+- Adventur (adventur.fi) - Angular app hosted on Firebase using Google Maps API
 - GitHub profile link
 
 ## Architecture
