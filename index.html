@@ -497,9 +497,10 @@
 • about - About me  
 • projects - List all projects
 • contact - Contact information
-• korttelikommentti - Open Korttelikommentti project
-• adventur - Open Adventur project
-• github - Open GitHub profile
+• korttelikommentti - View Korttelikommentti project details
+• adventur - View Adventur project details
+• github - View GitHub profile details
+• open <project> - Open project in new tab (e.g., 'open github')
 • clear / cls - Clear terminal`;
             },
             
@@ -512,28 +513,69 @@ Check out my projects below!`;
             projects: () => {
                 return `My Projects:
 1. Korttelikommentti - Local community platform
-   Type 'korttelikommentti' to visit
+   Type 'korttelikommentti' for details
 
 2. Adventur - Adventure planning application  
-   Type 'adventur' to visit
+   Type 'adventur' for details
 
 3. GitHub - All other projects and contributions
-   Type 'github' to visit`;
+   Type 'github' for details
+
+💡 Tip: Use 'open <project>' to visit in new tab`;
             },
             
             korttelikommentti: () => {
-                window.open('https://www.korttelikommentti.fi', '_blank');
-                return 'Opening Korttelikommentti...';
+                return {
+                    type: 'html',
+                    content: `Korttelikommentti - Local Community Platform
+
+Description: A community discussion platform for local neighborhoods.
+Technologies: React, Node.js, SQL Server, Azure
+Status: Live Production
+
+🔗 Visit: <a href="https://www.korttelikommentti.fi" target="_blank" style="color: #00ff41; text-decoration: underline;">https://www.korttelikommentti.fi</a>`
+                };
             },
             
             adventur: () => {
-                window.open('https://unk-project-34c26.web.app/', '_blank');
-                return 'Opening Adventur...';
+                return {
+                    type: 'html',
+                    content: `Adventur - Adventure Planning Application
+
+Description: Plan and organize outdoor adventures with friends.
+Technologies: React, TypeScript, Firebase, Google Maps API
+Status: Portfolio Project (Business ended)
+
+🔗 Visit: <a href="https://unk-project-34c26.web.app/" target="_blank" style="color: #00ff41; text-decoration: underline;">https://unk-project-34c26.web.app/</a>`
+                };
             },
             
             github: () => {
+                return {
+                    type: 'html',
+                    content: `GitHub Profile - All Projects & Contributions
+
+Description: View all my open source projects and contributions.
+Technologies: Various (C#, JavaScript, TypeScript, Python)
+Repositories: 25+ public repos
+
+🔗 Visit: <a href="https://github.com/pixunen" target="_blank" style="color: #00ff41; text-decoration: underline;">https://github.com/pixunen</a>`
+                };
+            },
+            
+            'open korttelikommentti': () => {
+                window.open('https://www.korttelikommentti.fi', '_blank');
+                return '🚀 Opening Korttelikommentti in new tab...';
+            },
+            
+            'open adventur': () => {
+                window.open('https://unk-project-34c26.web.app/', '_blank');
+                return '🚀 Opening Adventur in new tab...';
+            },
+            
+            'open github': () => {
                 window.open('https://github.com/pixunen', '_blank');
-                return 'Opening GitHub profile...';
+                return '🚀 Opening GitHub profile in new tab...';
             },
             
             clear: () => {
@@ -553,9 +595,16 @@ Portfolio: pixunen.github.io`;
             }
         };
         
-        function addOutput(text, className = '') {
+        function addOutput(content, className = '') {
             const div = document.createElement('div');
-            div.textContent = text;
+            
+            // Handle HTML content
+            if (typeof content === 'object' && content.type === 'html') {
+                div.innerHTML = content.content;
+            } else {
+                div.textContent = content;
+            }
+            
             if (className) div.className = className;
             output.appendChild(div);
             
@@ -572,9 +621,14 @@ Portfolio: pixunen.github.io`;
             if (commands[command]) {
                 const result = commands[command]();
                 if (result) {
-                    result.split('\n').forEach(line => {
-                        addOutput(line, command === 'help' || command === 'about' || command === 'projects' || command === 'contact' ? 'success' : '');
-                    });
+                    // Handle both string and HTML object results
+                    if (typeof result === 'object' && result.type === 'html') {
+                        addOutput(result, command === 'help' || command === 'about' || command === 'projects' || command === 'contact' ? 'success' : '');
+                    } else {
+                        result.split('\n').forEach(line => {
+                            addOutput(line, command === 'help' || command === 'about' || command === 'projects' || command === 'contact' ? 'success' : '');
+                        });
+                    }
                 }
             } else if (command === '') {
                 // Do nothing for empty command
